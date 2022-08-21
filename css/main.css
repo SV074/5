@@ -1,0 +1,114 @@
+.body {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.header {
+    
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.stripe {
+    display: flex;
+    align-items: center;
+    
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: rgb(32, 51, 104);
+}
+
+#clock {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.town {
+    display: flex;
+    padding-left: 50px;
+}
+
+select {
+    border: none;
+    background-color: rgb(32, 51, 104);
+
+}
+
+.phone_tel {
+    padding-left: 50px;
+
+}
+
+.phone_tel a {
+    color: blanchedalmond;
+    text-decoration: none;
+
+}
+
+.search-personal-cart {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    justify-content: space-evenly;
+
+}
+
+ .search-personal-cart svg {
+    fill: aliceblue;
+    stroke: aliceblue;
+} 
+ .search-personal-cart svg:hover {
+    fill: chartreuse;
+    stroke:chartreuse;
+} 
+
+.logo {
+    padding-left: 100px;
+    padding-top: 50px;
+}
+
+.row {
+    border-top: 2px solid silver;
+    width: 100%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1;
+}
+.modal .modal_content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    z-index: 1;
+    height: 50%;
+}
+.modal .modal_content .close_modal_window {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button-products {
+    border: 1px solid grey;
+    width: 40px;
+    border-radius: 3px;
+    text-align: center;
+    margin-left: 50px;
+}
+
+

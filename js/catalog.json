@@ -1,0 +1,46 @@
+[
+     {
+         "id": "1",
+        "title": "Спортивный костюм",
+        "price": "1700",
+        "size": "M",
+        "imgSrc": "img/img_products/i (1).webp"
+    },
+    {
+        "id": "2",
+        "title": "Толстовка",
+        "price": "1200",
+        "size": "S",
+        "imgSrc": "img/img_products/i.webp"
+    },
+     {
+        "id": "3",
+        "title": "Рубашка",
+        "price": "1100",
+        "size": "L",
+        "imgSrc": "img/img_products/d.webp"
+    },
+     {
+        "id": "4",
+        "title": "Футболка",
+        "price": "900",
+        "size": "Xl",
+        "imgSrc": "img/img_products/orig (1).webp"
+    },
+     {
+        "id": "5",
+        "title": "Пиджак",
+        "price": "1900",
+        "size": "S",
+        "imgSrc": "img/img_products/orig (2).webp"
+    },
+    {
+        "id": "6",
+        "title": "Бомбер",
+        "price": "4000",
+        "size": "L",
+        "imgSrc": "img/img_products/orig.webp"
+    }
+
+
+]
