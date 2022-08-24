@@ -187,6 +187,7 @@ for (let i = 0; i <= pushToCartButtons.length; i++) {
 
 
 
+
 // btnAdd.addEventListener('click', (event) => {
 //
 //     console.log(event);
