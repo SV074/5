@@ -112,7 +112,7 @@ function buildCatalog() {
                 <h3 class="catalog-title">${title}</h3>
             <div class="catalog-card__content">
                 <div class="catalog-card__price">${price} ₽</div>
-                <div class="catalog-card__number">Артикул:${id}</div>
+                <div class="catalog-card__number">${id}</div>
                 <div class="catalog-card__size">Размер:${size}</div>
             </div>
             <button class="catalog-card__btn" data-cart id="btn-render-cart">Добавить в корзину</button>

@@ -1,7 +1,7 @@
-const cart = document.getElementById('cart');
+// const cart = document.getElementById('cart');
 const totalPriceEl = document.getElementById('total-price');
 const btnClearCart = document.getElementById('btn-clear__cart');
-let btnDeleteCard = document.getElementsByClassName('cart-delete');
+// const btnDeleteCard = document.getElementById('delete');
 
 
 
@@ -13,7 +13,7 @@ function renderCart() {
         // btnDeleteCard.disabled = true;
     } else {
         let cartHtml = JSON.parse(localStorage.getItem('cart1'));
-        // btnDeleteCard.disabled = false;
+        
         const template = (imgSrc, title, price, id, size) => {
             return  `<div class="catalog-cart">
                 <img src="${imgSrc}" alt="${title}" class="catalog-cart__image">
@@ -37,25 +37,32 @@ function renderCart() {
                 element.size
             );
         });
+        // btnDeleteCard.disabled = false;
     }
 }
 
  renderCart();
 
 function deleteProduct(id) {
-    
+    // let id = document.querySelector('.catalog-cart__number');
+
     let cart = JSON.parse(localStorage.getItem('cart1'));
-    
-    let item = cart.findIndex(item => item.id == parseInt(id));
+
+
+
+    let item = cart.findIndex(item => item.id === id);
+
     console.log(item);
     let index = cart.indexOf(item);
-    
     console.log(index);
+
     cart.splice(index, 1);
-    
+
     localStorage.setItem('cart1', JSON.stringify(cart));
-    
+
 };
+
+
 
 document.getElementById('delete').addEventListener('click', () => {
     
@@ -63,7 +70,8 @@ document.getElementById('delete').addEventListener('click', () => {
     
     renderCart();
     
-});
+}
+);
 
 
 
