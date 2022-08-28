@@ -281,7 +281,6 @@ function init() {
         itemsInLocaleStorage = JSON.parse(localStorage.getItem('cart'));
     }
 
-
     if (itemsInLocaleStorage) {
         productsInCart = [...productsInCart, ...itemsInLocaleStorage];
     }
