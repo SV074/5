@@ -54,8 +54,8 @@ const mini = document.getElementById('mini');
 const maxi = document.getElementById('maxi');
 const btnDeleteCart = document.querySelector('[data-delete]');
 const totalPriceEl = document.getElementById('total-price');
-const btnAdd = document.getElementsByClassName('catalog-card__btn');
 
+const pushToCartButtons = document.getElementsByClassName('catalog-card__btn');
 
 let min;
 let max;
@@ -112,10 +112,10 @@ function buildCatalog() {
                 <h3 class="catalog-title">${title}</h3>
             <div class="catalog-card__content">
                 <div class="catalog-card__price">${price} ₽</div>
-                <div class="catalog-card__number">${id}</div>
+                <div class="catalog-card__number">Артикул:${id}</div>
                 <div class="catalog-card__size">Размер:${size}</div>
             </div>
-            <button class="catalog-card__btn" data-cart id="btn-render-cart">Добавить в корзину</button>
+            <button class="catalog-card__btn" data-product-id="${id}">Добавить в корзину</button>
         </div>`;
     };
 
@@ -156,123 +156,51 @@ maxi.addEventListener('change', (event) => {
     buildCatalog();
 });
 
+let productsInCart = [];
 
-   window.addEventListener('click', (event) => {
+let productInCart = (id, title, size, price, imgSrc, count = 1) => {
     
+    return {
+        id: +id,
+        title: title,
+        size: size, 
+        price: price,
+        imgSrc: imgSrc,
+        count: count
+    }
+}
 
-        if (event.target.hasAttribute('data-cart')) {
-    
-            let card = event.target.closest('.catalog-card');
-    
-            let productInfo = {
-                id: card.querySelector('.catalog-card__number').innerText,
-                imgSrc: card.querySelector('.catalog-card__image').getAttribute('src'),
-                title: card.querySelector('.catalog-title').innerText,
-                price: card.querySelector('.catalog-card__price').innerText,
-                size: card.querySelector('.catalog-card__size').innerText,
-            };
-    
-            // let cartItemHtml = `<div class="catalog-cart">
-            //     <img src="${productInfo.imgSrc}" alt="${productInfo.title}" class="catalog-cart__image">
-            //     <h3 class="catalog-cart__title">${productInfo.title}</h3>
-            // <div class="catalog-cart__content">
-            //     <div class="catalog-cart__price" data-price>${productInfo.price}</div>
-            //     <div class="catalog-cart__number">${productInfo.id}</div>
-            //     <div class="catalog-cart__size">Размер:${productInfo.size}</div>
-            //     <div class="catalog-cart__counter" data-counter>Кол-во:1</div>
-            // </div>
-            // <button class="cart-delete" data-delete id="delete">X</button>
-            // </div>`
-            // let product = catalog.find(it => it.id === parseInt(id));
-            // catalogHtml.push(product);
 
-           // Сохранение в LocalStorage
-            let cart = JSON.parse(localStorage.getItem('cart1'))||[];
-            localStorage.setItem('productInfo', JSON.stringify(productInfo));
-            cart.push(productInfo);
-            localStorage.setItem('cart1', JSON.stringify(cart));
-       }
-    
-        
+for (let i = 0; i <= pushToCartButtons.length; i++) {
+    let item = pushToCartButtons[i];
+    if (item) {
+        item.addEventListener('click', (event) => {
+            let productId = event.target.dataset.productId;
+            let product = getProduct(productId); 
+            let findIndex = productsInCart.findIndex((item) => {
+                return +productId === item.id;
+            })
+            if (findIndex < 0) {
+                productsInCart.push(productInCart(productId, product.title, product.size, product.price, product.imgSrc, product.count));
+            } else {
+                productsInCart[findIndex].count++;
+            }
+
+            localStorage.setItem('cart', JSON.stringify(productsInCart));
+        })
+    }
+}
+
+function getProduct(id) {
+    let findIndex = catalog.findIndex((item) => {
+        return +id === item.id;
     })
 
-
-
-
-// window.addEventListener('click', (event) => {
-    
-
-//     if (event.target.hasAttribute('data-cart')) {
-
-//         let card = event.target.closest('.catalog-card');
-
-//         let productInfo = {
-//             id: card.querySelector('.catalog-card__number').innerText,
-//             imgSrc: card.querySelector('.catalog-card__image').getAttribute('src'),
-//             title: card.querySelector('.catalog-title').innerText,
-//             price: card.querySelector('.catalog-card__price').innerText,
-//             size: card.querySelector('.catalog-card__size').innerText,
-//         };
-
-//         let cartItemHtml = `<div class="catalog-cart">
-//             <img src="${productInfo.imgSrc}" alt="${productInfo.title}" class="catalog-cart__image">
-//             <h3 class="catalog-cart__title">${productInfo.title}</h3>
-//         <div class="catalog-cart__content">
-//             <div class="catalog-cart__price" data-price>${productInfo.price}</div>
-//             <div class="catalog-cart__number">${productInfo.id}</div>
-//             <div class="catalog-cart__size">Размер:${productInfo.size}</div>
-//             <div class="catalog-cart__counter" data-counter>Кол-во:1</div>
-//         </div>
-//         <button class="cart-delete" data-delete id="delete">X</button>
-//         </div>`
-
-//         
-
-//         
-
-//     }
-
-
-    // // Удаление товара
-    // function deleteCartProduct() {
-    //     event.target.closest('.catalog-cart').remove();
-    // }
-
-    // if (event.target.hasAttribute('data-delete')) {
-    //     deleteCartProduct();
-    // }
-    // // Очистка корзины
-    // function clearCart() {
-    //     cart.innerHTML = '';
-    // }
-
-    // if(event.target.hasAttribute('data-delete-cart')) {
-    //     clearCart();
-    // }
-
-    // totalPrice();
-
-    
-
-
-
-//});
-
-
-
-// Подсчет стоимости товаров 
-// function totalPrice() {
-//     const catalogCard = document.querySelectorAll('.catalog-cart');
-//     let totalCost = 0;
-
-//     catalogCard.forEach(function (item) {
-//         const priceEl = item.querySelector('.catalog-cart__price');
-//         totalCost += parseInt(priceEl.innerText);
-//     });
-
-//     totalPriceEl.innerText = totalCost;
-// }
-
+    if(findIndex >= 0) {
+        return catalog[findIndex];
+    }
+    return {};
+}
 
 
 

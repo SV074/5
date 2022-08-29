@@ -1,20 +1,19 @@
 // const cart = document.getElementById('cart');
 const totalPriceEl = document.getElementById('total-price');
 const btnClearCart = document.getElementById('btn-clear__cart');
-// const btnDeleteCard = document.getElementById('delete');
-
-
+const deleteCards = document.getElementsByClassName('cart-delete');
+let cartHtml = JSON.parse(localStorage.getItem('cart'));
 
 
 
 function renderCart() {
-    if(cart.length === 0) {
+    if(cartHtml.length === 0) {
         cart.innerHTML = "Корзина пуста";
-        // btnDeleteCard.disabled = true;
+         
     } else {
-        let cartHtml = JSON.parse(localStorage.getItem('cart1'));
         
-        const template = (imgSrc, title, price, id, size) => {
+        let cartHtml = JSON.parse(localStorage.getItem('cart'));
+        const template =  (imgSrc, title, price, id, size, count) => {
             return  `<div class="catalog-cart">
                 <img src="${imgSrc}" alt="${title}" class="catalog-cart__image">
                 <h3 class="catalog-cart__title">${title}</h3>
@@ -22,9 +21,9 @@ function renderCart() {
                 <div class="catalog-cart__price" data-price>${price}</div>
                 <div class="catalog-cart__number">${id}</div>
                 <div class="catalog-cart__size">Размер:${size}</div>
-                <div class="catalog-cart__counter" data-counter>Кол-во:1</div>
+                <div class="catalog-cart__counter" data-counter>Кол-во:${count}</div>
             </div>
-            <button class="cart-delete" data-delete id="delete">X</button>
+            <button class="cart-delete" data-delete-id="${id}">X</button>
             </div>`
         };
     
@@ -34,53 +33,43 @@ function renderCart() {
                 element.title,
                 element.price,
                 element.id,
-                element.size
+                element.size,
+                element.count
             );
         });
-        // btnDeleteCard.disabled = false;
+        
     }
 }
 
  renderCart();
 
-function deleteProduct(id) {
-    // let id = document.querySelector('.catalog-cart__number');
+for (i = 0; i < deleteCards.length; i++) {
+    let item = deleteCards[i];
+    if (item) {
+        item.addEventListener('click', (event) => {
+            let deleteId = event.target.dataset.deleteId;
+            console.log(deleteId);            
+            let findIndex = cartHtml.findIndex((item) => {
+                return +deleteId === item.id;
+            })
+            console.log(findIndex);
+            cartHtml.splice(findIndex, 1);
+            cart.count--;
+            // let count = document.querySelector(['data-counter']);
+            // if(count > 1) {
+            //     count.innerText =--count.innerText;
+            //     console.log(count);
+            // } else if(event.target.closest('.cart') && parseInt(count === 1)) {
+            //     event.target.closest('.catalog-cart').remove();
+            // }
+            
+            
+            localStorage.setItem('cart', JSON.stringify(cartHtml));
+            
+        })
+    }
 
-    let cart = JSON.parse(localStorage.getItem('cart1'));
 
 
-
-    let item = cart.findIndex(item => item.id === id);
-
-    console.log(item);
-    let index = cart.indexOf(item);
-    console.log(index);
-
-    cart.splice(index, 1);
-
-    localStorage.setItem('cart1', JSON.stringify(cart));
-
-};
-
-
-
-document.getElementById('delete').addEventListener('click', () => {
-    
-    deleteProduct();
-    
-    renderCart();
-    
 }
-);
 
-
-
-
-
-
-
-
-// btnClearCart.addEventListener('click', () => {
-//     localStorage.clear();
-//     cart.innerHTML = "Корзина пуста";
-// });
