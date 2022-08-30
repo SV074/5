@@ -53,7 +53,7 @@ const catalogElement = document.getElementById('catalog');
 const mini = document.getElementById('mini');
 const maxi = document.getElementById('maxi');
 const btnDeleteCart = document.querySelector('[data-delete]');
-const totalPriceEl = document.getElementById('total-price');
+
 
 const pushToCartButtons = document.getElementsByClassName('catalog-card__btn');
 

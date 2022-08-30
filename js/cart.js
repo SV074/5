@@ -37,6 +37,7 @@ function renderCart() {
                 element.count
             );
         });
+        totalPrice();
         
     }
 }
@@ -51,19 +52,21 @@ for (i = 0; i < deleteCards.length; i++) {
             console.log(deleteId);            
             let findIndex = cartHtml.findIndex((item) => {
                 return +deleteId === item.id;
+                
             })
             console.log(findIndex);
-            cartHtml.splice(findIndex, 1);
-            cart.count--;
-            // let count = document.querySelector(['data-counter']);
-            // if(count > 1) {
-            //     count.innerText =--count.innerText;
-            //     console.log(count);
-            // } else if(event.target.closest('.cart') && parseInt(count === 1)) {
-            //     event.target.closest('.catalog-cart').remove();
-            // }
             
             
+            
+            if(findIndex < 0) {
+                cartHtml.splice(findIndex, 1);
+                
+            } else {
+                
+                cartHtml[findIndex].count--;
+            }
+            
+            // event.target.closest('.catalog-cart').remove()
             localStorage.setItem('cart', JSON.stringify(cartHtml));
             
         })
@@ -73,3 +76,16 @@ for (i = 0; i < deleteCards.length; i++) {
 
 }
 
+// Подсчет стоимости товаров 
+function totalPrice() {
+    const catalogCard = document.querySelectorAll('.catalog-cart');
+    let totalCost = 0;
+
+    catalogCard.forEach(function (item) {
+        const priceEl = item.querySelector('.catalog-cart__price');
+        totalCost += parseInt(priceEl.innerText);
+    });
+
+    totalPriceEl.innerText = totalCost;
+}
+totalPrice();
