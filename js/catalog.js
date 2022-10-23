@@ -111,7 +111,7 @@ function buildCatalog() {
                 <img src="${imgSrc}" alt="${title}" class="catalog-card__image">
                 <h3 class="catalog-title">${title}</h3>
             <div class="catalog-card__content">
-                <div class="catalog-card__price">${price} ₽</div>
+                <div class="catalog-card__price">Цена:${price} ₽</div>
                 <div class="catalog-card__number">Артикул:${id}</div>
                 <div class="catalog-card__size">Размер:${size}</div>
             </div>
@@ -127,8 +127,6 @@ function buildCatalog() {
             element.id,
             element.size
         );
-
-
     });
 }
 
@@ -181,7 +179,8 @@ for (let i = 0; i <= pushToCartButtons.length; i++) {
                 return +productId === item.id;
             })
             if (findIndex < 0) {
-                productsInCart.push(productInCart(productId, product.title, product.size, product.price, product.imgSrc, product.count));
+                let men = productInCart(productId, product.title, product.size, product.price, product.imgSrc, product.count);
+                productsInCart.push(men);
             } else {
                 productsInCart[findIndex].count++;
             }

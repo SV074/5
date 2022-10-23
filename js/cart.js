@@ -1,34 +1,47 @@
-// const cart = document.getElementById('cart');
-const totalPriceEl = document.getElementById('total-price');
-const btnClearCart = document.getElementById('btn-clear__cart');
-const deleteCards = document.getElementsByClassName('cart-delete');
+let cartItems = document.getElementById('cart');
+let totalPriceEl = document.getElementById('total-price');
+let btnClearCart = document.getElementById('btn-clear__cart');
 let cartHtml = JSON.parse(localStorage.getItem('cart'));
 
 
 
+
+// Функция отоброжения корзины
+
 function renderCart() {
-    if(cartHtml.length === 0) {
-        cart.innerHTML = "Корзина пуста";
-         
+    cartItems.innerHTML = "";
+    totalPriceEl.innerHTML = "";
+    if (cartHtml.length === 0) {
+
+        cartItems.innerHTML = "Корзина пуста";
+        totalPriceEl.innerHTML = 0;
     } else {
-        
-        let cartHtml = JSON.parse(localStorage.getItem('cart'));
-        const template =  (imgSrc, title, price, id, size, count) => {
-            return  `<div class="catalog-cart">
+
+
+        const template = (imgSrc, title, price, id, size, count) => {
+            return `<div class="catalog-cart">
                 <img src="${imgSrc}" alt="${title}" class="catalog-cart__image">
+                <div class="cart-content">
                 <h3 class="catalog-cart__title">${title}</h3>
             <div class="catalog-cart__content">
+                <div class="catalog-price">Цена:
                 <div class="catalog-cart__price" data-price>${price}</div>
+                </div>
                 <div class="catalog-cart__number">${id}</div>
                 <div class="catalog-cart__size">Размер:${size}</div>
-                <div class="catalog-cart__counter" data-counter>Кол-во:${count}</div>
+                <div class="quantity">Кол-во:
+                    <div class="catalog-cart__counter" data-counter>${count}</div>
+                </div>
             </div>
-            <button class="cart-delete" data-delete-id="${id}">X</button>
+            </div>
+            <button class="cart-delete" data-product-id="${id}">X</button>
             </div>`
         };
-    
+
+
+
         cartHtml.forEach((element) => {
-            cart.innerHTML += template(
+            cartItems.innerHTML += template(
                 element.imgSrc,
                 element.title,
                 element.price,
@@ -36,56 +49,66 @@ function renderCart() {
                 element.size,
                 element.count
             );
+
         });
-        totalPrice();
-        
+
+
+
     }
+
 }
 
- renderCart();
+renderCart();
+calcCartPrice();
 
-for (i = 0; i < deleteCards.length; i++) {
-    let item = deleteCards[i];
-    if (item) {
-        item.addEventListener('click', (event) => {
-            let deleteId = event.target.dataset.deleteId;
-            console.log(deleteId);            
-            let findIndex = cartHtml.findIndex((item) => {
-                return +deleteId === item.id;
-                
-            })
-            console.log(findIndex);
-            
-            
-            
-            if(findIndex < 0) {
-                cartHtml.splice(findIndex, 1);
-                
-            } else {
-                
-                cartHtml[findIndex].count--;
-            }
-            
-            // event.target.closest('.catalog-cart').remove()
-            localStorage.setItem('cart', JSON.stringify(cartHtml));
-            
+// Повесили слушатель на все кнопки удаления товара
+
+cartItems.addEventListener('click', (event) => {
+    if (event.target.classList.contains('cart-delete')) {
+        let productId = event.target.dataset.productId;
+
+        let findIndex = cartHtml.findIndex((item) => {
+            return +productId === item.id;
         })
+
+
+        let product = cartHtml[findIndex];
+
+
+
+        if (product.count > 1) {
+            product.count--;
+
+
+        } else {
+            cartHtml.splice(findIndex, 1);
+
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cartHtml));
+        renderCart();
+        calcCartPrice();
     }
 
+})
+
+// Функция подсчета стоимости товаров в корзине
+function calcCartPrice() {
+    let catalogCart = document.querySelectorAll('.catalog-cart');
+    let priceTotal = 0;
+
+    catalogCart.forEach((item) => {
+        const amountEl = item.querySelector('[data-counter]');
+        const priceEl = item.querySelector('[data-price]');
+        const currentPrice = parseInt(amountEl.innerText) * parseInt(priceEl.innerText);
+        priceTotal += currentPrice;
 
 
-}
-
-// Подсчет стоимости товаров 
-function totalPrice() {
-    const catalogCard = document.querySelectorAll('.catalog-cart');
-    let totalCost = 0;
-
-    catalogCard.forEach(function (item) {
-        const priceEl = item.querySelector('.catalog-cart__price');
-        totalCost += parseInt(priceEl.innerText);
     });
-
-    totalPriceEl.innerText = totalCost;
+    totalPriceEl.innerHTML = priceTotal;
 }
-totalPrice();
+
+// btnClearCart.addEventListener('click', (event) => {
+//     cartItems.innerHTML = "";
+//     localStorage.clear();
+// })

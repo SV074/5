@@ -134,7 +134,10 @@ body {
     font-size: small;
 }
 
-.catalog-cart__content {}
+.catalog-cart__content {
+    
+
+}
 
 .catalog-cart__price {
     font-weight: bold;

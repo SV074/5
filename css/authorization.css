@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    justify-content: center;
+}
+
+.authorization {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.login {
+  margin: 10px;
+}
+
+.password {
+    margin: 10px;
+}
+
+.btn {
+
+}
