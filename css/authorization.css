@@ -3,6 +3,17 @@ body {
     justify-content: center;
 }
 
+.stripe {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.btn-exit {
+    display: none;
+    
+    
+}
+
 .authorization {
     align-items: center;
     display: flex;

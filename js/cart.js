@@ -108,7 +108,9 @@ function calcCartPrice() {
     totalPriceEl.innerHTML = priceTotal;
 }
 
-// btnClearCart.addEventListener('click', (event) => {
-//     cartItems.innerHTML = "";
-//     localStorage.clear();
-// })
+btnClearCart.addEventListener('click', (event) => {
+    
+    localStorage.clear();
+    cartItems.innerHTML = "";
+    totalPriceEl.innerHTML = "";
+})

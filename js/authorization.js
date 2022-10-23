@@ -7,7 +7,7 @@ let btnExitAccount = document.querySelector('.btn-exit');
 let login;
 let password;
 
-if(localStorage != 0)
+
 
 
 
@@ -23,7 +23,7 @@ function sendForm() {
 
         info.innerHTML = "Correct";
         localStorage.setItem('user1', JSON.stringify(user));
-        btnExitAccount.innerHTML = "X";
+        btnExitAccount.style.display ='block';
 
     }  else if(login === '', password === '') { 
         info.innerHTML = "Empty";
@@ -45,7 +45,7 @@ function clearForm() {
 }
 
 btnExitAccount.addEventListener('click', () => {
-    localStorage.clear();
+    localStorage.removeItem('user1');
     clearForm();
-    btnExitAccount.innerHTML = "";
+    btnExitAccount.style.display ='none';
 })
